@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1505258420 source:d:\centu\clase_8\estructuras\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"funciones.h"
+
+1505258585 source:d:\centu\clase_8\estructuras\funciones.c
+
+1505258642 d:\centu\clase_8\estructuras\funciones.h
+

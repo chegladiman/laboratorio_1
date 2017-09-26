@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1506387553 source:d:\centu\falso_parcial\funciones.c
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+
+1506385880 source:d:\centu\falso_parcial\main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+
+1506385469 d:\centu\falso_parcial\funciones.h
+	<stdio.h>
+	<string.h>
+
