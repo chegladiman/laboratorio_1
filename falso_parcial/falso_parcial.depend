@@ -14,3 +14,18 @@
 	<stdio.h>
 	<string.h>
 
+1506881910 source:c:\users\rominaantonella\desktop\laboratorio_1-master\falso_parcial\funciones.c
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	"funciones.h"
+
+1506881953 c:\users\rominaantonella\desktop\laboratorio_1-master\falso_parcial\funciones.h
+	<stdio.h>
+	<string.h>
+
+1506881723 source:c:\users\rominaantonella\desktop\laboratorio_1-master\falso_parcial\main.c
+	<stdio.h>
+	<stdlib.h>
+	"funciones.h"
+

@@ -7,6 +7,7 @@ typedef struct
     int cantProd;
     char descProd[51];
     float impProd;
+    int estado;
 }Producto;
 
 typedef struct
@@ -26,7 +27,11 @@ typedef struct
 int limpiaTodo(Producto prod[], Proveedor prov[], ProductoProveedor prodProv[]);
 int menuInicial(void);
 int validarMenu(char opcionMenu[]);
-int altaProducto(ProductoProveedor prodProv[],Producto prod[]);
-int validarEntero(char validarCodigo[]);
-int validarDescr (char productoDescripcion[]);
-int validarFloat (char validarImporte[]);
+int altaProducto(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[]);
+int validarEntero(char strCod[]);
+int validarString (char strDescr[]);
+int validarFloat (char strCod[]);
+int modificarProducto(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[]);
+int bajaProducto(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[]);
+int informarDatos(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[]);
+int listarDatos(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[]);

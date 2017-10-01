@@ -6,33 +6,28 @@
 #define CANTPROD 5
 #define CANTPROV 5
 #define CANTPRODPROV 25
+#define LETRAS_DESCR 51
 
 
 int limpiaTodo(Producto prod[], Proveedor prov[], ProductoProveedor prodProv[])
 {
-    char vacio=" ";
     int i;
 
     for (i=0;i<CANTPROD;i++)
     {
-        prod[i].cantProd=0;
-        prod[i].impProd=0;
-        strcpy (prod[i].descProd, vacio);
+        prod[i].estado=0;
     }
 
     for (i=0;i<CANTPROV;i++)
     {
         prov[i].estado = 0;
-        prov[i].codigo = 0;
-        prov[i].descProv[0] = '\0';
     }
 
     for (i=0;i<CANTPRODPROV;i++)
     {
         prodProv[i].estado=0;
-        prodProv[i].codProd = 0;
-        prodProv[i].codProv = 0;
     }
+return 0;
 }
 
 int menuInicial(void)
@@ -67,7 +62,7 @@ int validarMenu(char opcionMenu[])
     }
     else
     {
-        auxMenu=atoi(opcionMenu);
+        auxMenu = atoi(opcionMenu);
         if (auxMenu<1||auxMenu>5)
         {
             printf("\nLa opcion ingresada no es valida. Por favor ingrese una opcion valida\n");
@@ -77,90 +72,257 @@ int validarMenu(char opcionMenu[])
     return (auxMenu);
 }
 
-int altaProducto(ProductoProveedor prodProv[],Producto prod[])
+int altaProducto(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[])
 {
-    int i=0, valor;
-    char validarCodigo;
-    char strCod[20];
+    int i=0, valor,contcant=0;
+    char strCod[11];
+    char strDescr[LETRAS_DESCR];
 
+    system("cls");
     for(i=0;i<CANTPROD;i++)
     {
-        /*Codigo de producto*/
-        do
+        if (contcant==CANTPROD)
         {
-            printf("Codigo del producto: ");
-            scanf("%s", strCod);
-            valor = validarEntero(strCod);
-        }while(valor == 0);
-        prod[i].codigo = atoi(strCod);
+            if (prod[i].estado==0)
+            {
+                do
+                {
+                    printf("Codigo del producto: ");
+                    scanf("%s", strCod);
+                    valor = validarEntero(strCod);
+                }while(valor == 0);
+                prod[i].codigo = atoi(strCod);
 
-        /*Cantidad*/
-        do
+                do
+                {
+                    printf("Codigo del proveedor: ");
+                    scanf("%s", strCod);
+                    valor = validarEntero(strCod);
+                }while(valor == 0);
+                prodProv[i].codProv = atoi(strCod);
+
+                do
+                {
+                    printf("Descripcion del producto (max. 50 caracteres): ");
+                    scanf ("%s",strDescr);
+                    valor = validarString (strDescr);
+                }while(valor == 0);
+                strcpy (prod[i].descProd,strDescr);
+
+                do
+                {
+                    printf("Importe del producto: ");
+                    scanf("%s", strCod);
+                    valor = validarFloat(strCod);
+                }while(valor == 0);
+                prod[i].impProd = atoi(strCod);
+
+                do
+                {
+                    printf("Cantidad del producto: ");
+                    scanf("%s", strCod);
+                    valor = validarEntero(strCod);
+                }while(valor == 0);
+                prod[i].cantProd = atoi(strCod);
+
+                prod[i].estado=1;
+                prodProv[i].codProd = prod[i].codigo;
+                prodProv[i].estado = 1;
+                break;
+            }
+            if (prod[i].estado==1)
+            {
+                contcant++;
+            }
+        }
+        else
         {
-            printf("Cantidad del producto: ");
-            scanf("%s", strCod);
-            valor=validarEntero(strCod);
-        }while(valor == 0);
-        prod[i].cantProd = atoi(strCod);
-
-        do
-        {
-            printf("Descripcion del producto (max. 50 caracteres): ");
-            scanf("%[^\n]",strCod);
-            valor = validarDescr (strCod);
-        }while(valor == 0);
-
+            printf("No se pueden ingresar mas productos.\n");
+        }
     }
-
-
+return 0;
 }
 
 /* Error:0; Ok:1 */
-int validarEntero(char validarCodigo[])
+int validarEntero(char strCod[])
 {
-    int i,flag=1,largo,auxCod;
+    int i,flag=1,largo;
 
-    largo = strlen(validarCodigo);
+    largo = strlen(strCod);
     for(i=0;i<largo;i++)
     {
-        if(!isdigit(validarCodigo[i]))
+        if(!isdigit(strCod[i]))
         {
             flag=0;
+            printf("El dato ingresado no es valido. Por favor ingrese un numero entero.\n");
             break;
         }
     }
     return flag;
 }
 
-int validarDescr(char productoDescripcion[])
+int validarFloat(char strCod[])
 {
-    int largo=0,flag=0,i;
+    int i,flag=1,largo;
 
-    for (i=0;i<CANTPROD;i++)
-    {
-        largo = strlen (productoDescripcion[i]);
-        if (largo<50)
-        {
-            flag==1;
-            break;
-        }
-        printf("La descripcion de producto excede los 50 caracteres. Vuelva a intentar");
-    }
-return flag;
-}
-
-int validarFloat(char validarImporte[])
-{
-    int i,flag=0,largo,auxCod;
-
-    largo = strlen(validarImporte);
+    largo = strlen(strCod);
     for(i=0;i<largo;i++)
     {
-        if(isdigit(validarImporte[i])||validarImporte[i]=='.')
+        if(!isdigit(strCod[i])&&(strCod[i]!='.'))
+        {
+            flag=0;
+            printf("El dato ingresado no es valido. Por favor ingrese un importe valido.\n");
+            break;
+        }
+    }
+    return flag;
+}
+
+int validarString (char strDescr[])
+{
+    int flag=0,i;
+
+    for (i=0;i<=LETRAS_DESCR;i++)
+    {
+        if (strDescr[i]=='\0')
         {
             flag=1;
             break;
         }
     }
-    return flag;
+    if (flag==0)
+    {
+        printf ("La descripcion ingresada excede los 50 caracteres. Por favor ingrese una descripcion valida.\n");
+    }
+return flag;
+}
+
+int modificarProducto(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[])
+{
+    int i,codBusqueda,valor,flag=0;
+    char strCod[11],strDescr[LETRAS_DESCR];
+
+    printf("Ingrese codigo del producto a modificar: ");
+    scanf("%d",&codBusqueda);
+    for (i=0;i<CANTPROD;i++)
+    {
+        if (codBusqueda==prod[i].codigo&&prod[i].estado==1)
+        {
+            flag=1;
+            do
+            {
+                printf ("Codigo actual del proveedor: %d",prodProv[i].codProv);
+                printf("\nNuevo codigo del proveedor: ");
+                scanf("%s", strCod);
+                valor = validarEntero(strCod);
+            }while(valor == 0);
+            prodProv[i].codProv = atoi(strCod);
+
+            do
+            {
+                printf("Nueva descripcion del producto (max. 50 caracteres): ");
+                scanf ("%s",strDescr);
+                valor = validarString (strDescr);
+            }while(valor == 0);
+            strcpy (prod[i].descProd,strDescr);
+
+            do
+            {
+                printf("Nuevo importe del producto: ");
+                scanf("%s", strCod);
+                valor = validarFloat(strCod);
+            }while(valor == 0);
+            prod[i].impProd = atoi(strCod);
+
+            do
+            {
+                printf("Nueva cantidad del producto: ");
+                scanf("%s", strCod);
+                valor = validarEntero(strCod);
+            }while(valor == 0);
+            prod[i].cantProd = atoi(strCod);
+
+            prodProv[i].codProd = prod[i].codigo;
+        }
+    }
+    if (flag==0)
+    {
+        printf("El codigo ingresado no coincide con un producto existente.\n");
+    }
+return 0;
+}
+
+int bajaProducto(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[])
+{
+    int i,codBusqueda,flag=0;
+    char vacio[] = " ";
+
+    printf("Ingrese codigo del producto a borrar: ");
+    scanf("%d",&codBusqueda);
+    for (i=0;i<CANTPROD;i++)
+    {
+        if (codBusqueda==prod[i].codigo)
+        {
+            printf ("El producto %d ha sido eliminado.\n",prod[i].codigo);
+            flag=1;
+            prod[i].codigo=0;
+            prod[i].cantProd=0;
+            prod[i].estado=0;
+            prod[i].impProd=0;
+            strcpy (prod[i].descProd,vacio);
+        }
+    }
+    if (flag==0)
+    {
+        printf("El codigo ingresado no coincide con un producto existente\n");
+    }
+return 0;
+}
+
+int informarDatos(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[])
+{
+    int i, mayor=prod[i].cantProd, menor=prod[i].cantProd;
+
+    for(i=0;i<CANTPROD;i++)
+        {
+        if(prod[i].cantProd>mayor)
+            {
+                mayor=prod[i].cantProd;
+            }
+        if(prod[i].cantProd<menor)
+            {
+                menor=prod[i].cantProd;
+            }
+        }
+    for (i=0;i<CANTPROD;i++)
+    {
+        if (prod[i].cantProd==mayor)
+        {
+            printf("PRODUCTO CON MAYOR CANTIDAD:");
+            printf("\nCodigo del producto: %d",prod[i].codigo);
+            printf("\nCodigo del proveedor: %d",prodProv[i].codProd);
+            printf("\nDescripcion del producto: %s",prod[i].descProd);
+            printf("\nImporte del producto: %.2f",prod[i].impProd);
+        }
+        if (prod[i].cantProd==menor)
+        {
+            printf("PRODUCTO CON MENOR CANTIDAD:");
+            printf("\nCodigo del producto: %d",prod[i].codigo);
+            printf("\nCodigo del proveedor: %d",prodProv[i].codProd);
+            printf("\nDescripcion del producto: %s",prod[i].descProd);
+            printf("\nImporte del producto: %.2f",prod[i].impProd);
+        }
+    }
+return 0;
+}
+
+int listarDatos(ProductoProveedor prodProv[],Producto prod[],Proveedor prov[])
+{
+    int i,j;
+    int temp;
+    for(i=1;i<CANTPROD;i++)
+    {
+
+    }
+return 0;
 }
