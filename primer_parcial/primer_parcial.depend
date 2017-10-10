@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1506984304 source:d:\pp_centurion_andres\primer_parcial\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lib.h"
+
+1506985194 d:\pp_centurion_andres\primer_parcial\lib.h
+	<stdio.h>
+	<string.h>
+
+1506985282 source:d:\pp_centurion_andres\primer_parcial\lib.c
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	"lib.h"
+
