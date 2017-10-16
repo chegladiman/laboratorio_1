@@ -14,3 +14,18 @@
 	<ctype.h>
 	"lib.h"
 
+1508191226 source:c:\users\rominaantonella\desktop\primer_parcial\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lib.h"
+
+1508190688 c:\users\rominaantonella\desktop\primer_parcial\lib.h
+	<stdio.h>
+	<string.h>
+
+1508191854 source:c:\users\rominaantonella\desktop\primer_parcial\lib.c
+	<stdio.h>
+	<string.h>
+	<ctype.h>
+	"lib.h"
+

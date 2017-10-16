@@ -8,9 +8,6 @@ typedef struct
     char nombre[21];
     char apellido[21];
     int estado;
-    int equipo;
-    int tiempo;
-    int operador;
 }Cliente;
 
 typedef struct
@@ -22,15 +19,25 @@ typedef struct
     int estado;
 }Alquiler;
 
-int limpiaTodo(Cliente client[], Alquiler alqui[]);
+typedef struct
+{
+    char nombreYApellido[42];
+    int equipoMasAlquilado;
+    int tiempoPromedio;
+    int estado;
+}ClienteAlquiler;
+
+int inicializar(Cliente client[], Alquiler alqui[], ClienteAlquiler clienteAlquiler[]);
 int menuInicial(void);
 int validarMenu(char opcionMenu[]);
-int altaCliente(Cliente client[], Alquiler alqui[]);
-int validarEntero(char strCod[]);
-int validarLong(char strCod[]);
-int validarString (char strNombre[]);
-int modificarCliente(Cliente client[], Alquiler alqui[]);
-int bajaCliente(Cliente client[], Alquiler alqui[]);
-int finAlquiler (Cliente client[],Alquiler alqui[]);
-
-
+int funcionAlta(Cliente client[]);
+int funcionModificar(Cliente client[]);
+int funcionBaja(Cliente client[]);
+int nuevoAlquiler(Cliente client[], Alquiler alqui[]);
+int finAlquiler(Alquiler alqui[]);
+int informar(Cliente client[], ClienteAlquiler clienteAlquiler[]);
+int validarInt(char strInt[]);
+int validarLong(char strLong[]);
+int validarString (char strString[]);
+int validarId(int valor2, Cliente client[]);
+int validarIdAlquiler(int idAlqui, Alquiler alqui[]);

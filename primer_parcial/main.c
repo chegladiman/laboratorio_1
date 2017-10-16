@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "lib.h"
 
-#define CLIENTE 5
+#define CLIENTE 4
 #define ALQUI 5
-#define CLIENTEALQUI 25
+#define CLIENTEALQUI 20
 
 int main()
 {
@@ -13,8 +13,9 @@ int main()
 
     Cliente client[CLIENTE];
     Alquiler alqui[ALQUI];
+    ClienteAlquiler clienteAlquiler[CLIENTEALQUI];
 
-    limpiaTodo(client, alqui);
+    inicializar(client, alqui, clienteAlquiler);
     while (seguir=='s')
     {
     opcionMenu = menuInicial();
@@ -22,13 +23,13 @@ int main()
         switch (opcionMenu)
         {
         case 1:
-            altaCliente(client, alqui);
+            funcionAlta(client);
             flagClient=1;
             break;
         case 2:
             if (flagClient==1)
             {
-                modificarCliente(client, alqui);
+                funcionModificar(client);
                 break;
             }
             else
@@ -39,7 +40,7 @@ int main()
         case 3:
             if (flagClient==1)
             {
-                bajaCliente(client, alqui);
+                funcionBaja(client);
             }
             else
             {
@@ -49,7 +50,7 @@ int main()
         case 4:
             if (flagClient==1)
             {
-                nuevoAlquiler (client, alqui);
+                nuevoAlquiler(client, alqui);
             }
             else
             {
@@ -57,17 +58,30 @@ int main()
             }
             break;
         case 5:
-            if (flagAlta==1)
+            if (flagClient==1&&flagAlqui==1)
             {
-                finAlquiler(client, alqui);
+                finAlquiler(alqui);
             }
-            else
+            else if (flagClient==0)
             {
                 printf("Aun no se han ingresado clientes\n");
             }
-        case 6:
+            else
             {
-
+                printf("Aun no se han ingresado alquileres\n");
+            }
+        case 6:
+            if (flagClient==1&&flagAlqui==1)
+            {
+                informar(alqui, clienteAlquiler);
+            }
+            else if (flagClient==0)
+            {
+                printf("Aun no se han ingresado clientes\n");
+            }
+            else
+            {
+                printf("Aun no se han ingresado alquileres\n");
             }
         }
         printf("\nDesea realizar otra operacion? [s/n]: ");
